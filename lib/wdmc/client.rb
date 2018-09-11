@@ -86,7 +86,7 @@ module Wdmc
       all_shares.each do |share|
         result.push share if share['share_name'] == name
       end
-      return result
+      result
     end
 
     # check if share with exists
@@ -95,25 +95,25 @@ module Wdmc
       all_shares.each do |share|
         result.push share['share_name'] if share['share_name'].include?(name)
       end
-      return result
+      result
     end
 
     # add new share
     def add_share( data )
       response = post("#{@config['url']}/api/2.1/rest/shares", data, {accept: :json, :cookies => cookies})
-      return response.code
+      response.code
     end
 
     # modifies a share
     def modify_share( data )
       response = put("#{@config['url']}/api/2.1/rest/shares", data, {accept: :json, :cookies => cookies})
-      return response.code
+      response.code
     end
 
     # delete a share
     def delete_share( name )
       response = delete("#{@config['url']}/api/2.1/rest/shares/#{name}", {accept: :json, :cookies => cookies})
-      return response.code
+      response.code
     end
 
     ## working with ACL of a share
@@ -125,19 +125,19 @@ module Wdmc
 
     def set_acl( data )
       response = post("#{@config['url']}/api/2.1/rest/share_access", data, {accept: :json, :cookies => cookies})
-      return response.code
+      response.code
     end
 
     def modify_acl( data )
       response = put("#{@config['url']}/api/2.1/rest/share_access", data, {accept: :json, :cookies => cookies})
-      return response.code
+      response.code
     end
 
     def delete_acl( data )
       # well, I know the code below is not very pretty...
       # if someone knows how this shitty delete with rest-client will work
       response = delete("#{@config['url']}/api/2.1/rest/share_access?share_name=#{data['share_name']}&username=#{data['username']}", {accept: :json, :cookies => cookies})
-      return response
+      response
     end
     ## ACL end
 
@@ -151,7 +151,7 @@ module Wdmc
     # Set TimeMachine Configuration
     def set_tm( data )
       response = put("#{@config['url']}/api/2.1/rest/time_machine", data, {accept: :json, :cookies => cookies})
-      return response
+      response
     end
 
     ## Users
@@ -167,7 +167,7 @@ module Wdmc
       all_users.each do |user|
         result.push user if user[:username] == name
       end
-      return result
+      result
     end
 
     # check if user with name exists
@@ -176,25 +176,25 @@ module Wdmc
       all_users.each do |user|
         result.push user[:username] if user[:username].include?(name)
       end
-      return result
+      result
     end
 
     # add new user
     def add_user( data )
       response = post("#{@config['url']}/api/2.1/rest/users", data, {accept: :json, :cookies => cookies})
-      return response.code
+      response.code
     end
 
     # update an existing user
     def update_user( name, data )
       response = put("#{@config['url']}/api/2.1/rest/users/#{name}", data, {accept: :json, :cookies => cookies})
-      return response.code
+      response.code
     end
 
     # delete user
     def delete_user( name )
       response = delete("#{@config['url']}/api/2.1/rest/users/#{name}", {accept: :json, :cookies => cookies})
-      return response.code
+      response.code
     end
 
     ## Users
