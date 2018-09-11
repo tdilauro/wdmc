@@ -43,41 +43,41 @@ module Wdmc
     # device
     def system_information
       response = get("#{@config['url']}/api/2.1/rest/system_information", {accept: :json, :cookies => cookies})
-      eval(response)[:system_information]
+      eval(response.body)[:system_information]
     end
 
     def system_state
       response = get("#{@config['url']}/api/2.1/rest/system_state", {accept: :json, :cookies => cookies})
-      eval(response)[:system_state]
+      eval(response.body)[:system_state]
     end
 
     def firmware
       response = get("#{@config['url']}/api/2.1/rest/firmware_info", {accept: :json, :cookies => cookies})
-      eval(response)[:firmware_info]
+      eval(response.body)[:firmware_info]
     end
 
     def device_description
       response = get("#{@config['url']}/api/2.1/rest/device_description", {accept: :json, :cookies => cookies})
-      JSON.parse(response)['device_description']
+      JSON.parse(response.body)['device_description']
     end
 
     def network
       response = get("#{@config['url']}/api/2.1/rest/network_configuration", {accept: :json, :cookies => cookies})
-      eval(response)[:network_configuration]
+      eval(response.body)[:network_configuration]
       #JSON.parse(response)['network_configuration']
     end
 
     # storage
     def storage_usage
       response = get("#{@config['url']}/api/2.1/rest/storage_usage", {accept: :json, :cookies => cookies})
-      eval(response)[:storage_usage]
+      eval(response.body)[:storage_usage]
     end
 
     ## working with shares
     # get all shares
     def all_shares
       response = get("#{@config['url']}/api/2.1/rest/shares", {accept: :json, :cookies => cookies})
-      JSON.parse(response)['shares']['share']
+      JSON.parse(response.body)['shares']['share']
     end
 
     # find a share by name
@@ -120,7 +120,7 @@ module Wdmc
     # get the specified share access
     def get_acl( name )
       response = get("#{@config['url']}/api/2.1/rest/share_access/#{name}", {accept: :json, :cookies => cookies})
-      JSON.parse(response)['share_access_list']
+      JSON.parse(response.body)['share_access_list']
     end
 
     def set_acl( data )
@@ -137,7 +137,7 @@ module Wdmc
       # well, I know the code below is not very pretty...
       # if someone knows how this shitty delete with rest-client will work
       response = delete("#{@config['url']}/api/2.1/rest/share_access?share_name=#{data['share_name']}&username=#{data['username']}", {accept: :json, :cookies => cookies})
-      response
+      response.body
     end
     ## ACL end
 
@@ -145,20 +145,20 @@ module Wdmc
     # Get TimeMachine Configuration
     def get_tm
       response = get("#{@config['url']}/api/2.1/rest/time_machine", {accept: :json, :cookies => cookies})
-      eval(response)[:time_machine]
+      eval(response.body)[:time_machine]
     end
 
     # Set TimeMachine Configuration
     def set_tm( data )
       response = put("#{@config['url']}/api/2.1/rest/time_machine", data, {accept: :json, :cookies => cookies})
-      response
+      response.body
     end
 
     ## Users
     # Get all users
     def all_users
       response = get("#{@config['url']}/api/2.1/rest/users", {accept: :json, :cookies => cookies})
-      eval(response)[:users][:user]
+      eval(response.body)[:users][:user]
     end
 
     # find a user by name
@@ -202,7 +202,7 @@ module Wdmc
     def volumes
       login
       response = get("#{@config['url']}/api/2.1/rest/volumes", {accept: :json, :cookies => cookies})
-      volumes = JSON.parse(response)['volumes']['volume']
+      volumes = JSON.parse(response.body)['volumes']['volume']
     end
 
     private
